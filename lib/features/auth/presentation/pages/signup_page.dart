@@ -6,7 +6,9 @@ import 'package:instagram_clone_flutter/features/auth/presentation/components/my
 import 'package:instagram_clone_flutter/features/auth/presentation/components/my_text_field.dart';
 
 class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+
+  final void Function()? tooglePage;
+  const SignupPage({super.key, required this.tooglePage});
 
   @override
   State<SignupPage> createState() => _SignupPageState();
@@ -18,6 +20,7 @@ class _SignupPageState extends State<SignupPage> {
   final emailController = TextEditingController();
   final nameController = TextEditingController();
   final pwController = TextEditingController();
+  final confirmPwController = TextEditingController();
   // BUILD UI
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class _SignupPageState extends State<SignupPage> {
                 //welcome back msg
 
                 AutoSizeText(
-                  "Welcome back, you have been missed!",
+                  "Let's create an account for you!",
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontSize: 16,
@@ -50,14 +53,14 @@ class _SignupPageState extends State<SignupPage> {
 
                 const SizedBox(height: 20.0),
                 //email textfield
-                MyTextField(
+                CustomFormField(
                     controller: nameController,
                     hintText: "Username",
                     obscureText: false),
 
                 const SizedBox(height: 20.0),
                 //email textfield
-                MyTextField(
+                CustomFormField(
                     controller: emailController,
                     hintText: "Email",
                     obscureText: false),
@@ -65,22 +68,48 @@ class _SignupPageState extends State<SignupPage> {
                 const SizedBox(height: 15.0),
 
                 //pw textfield
-                MyTextField(
+                CustomFormField(
                     controller: pwController,
                     hintText: "Password",
                     obscureText: true),
 
                 const SizedBox(height: 15.0),
-                //login
+
+                CustomFormField(
+                    controller: confirmPwController,
+                    hintText: "Confirm Password",
+                    obscureText: true),
+                //sign up
+
+                const SizedBox(height: 15.0),
 
                 CustomButton(
                   onTap: () {},
-                  text: "Login",
+                  text: "Sign up",
                 ),
 
                 const SizedBox(height: 50.0),
 
-                AutoSizeText("Not a member? Register now")
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AutoSizeText(
+                      "Already a member? ",
+                      style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                    ),
+                    GestureDetector(
+                      onTap: widget.tooglePage,
+                      child: AutoSizeText(
+                        " Login now",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                          fontWeight : FontWeight.bold
+                          ),
+                        
+                      ),
+                    ),
+                  ],
+                )
               ],
             ),
           ),
